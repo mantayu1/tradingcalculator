@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="mainTitle">Trading Calculator</h1>
+
+        <!-- Input Fields -->
+        <div class="inputs">
+            <label>Ticker:</label>
+            <input type="text" id="ticker" placeholder="Enter asset ticker (e.g., BTC)" oninput="updateTitle()">
+            <label>Trading Fee (%):</label>
+            <input type="number" id="fee" value="0.1" placeholder="Fee in %" step="0.01">
+
+            <h2>Add Trade</h2>
+            <label>Amount Bought:</label>
+            <input type="number" id="amount" placeholder="Amount of asset">
+            <label>Price (USD):</label>
+            <input type="number" id="price" placeholder="Price per asset in USD">
+            <button class="primary-btn" onclick="addTrade()">Add Trade</button>
+        </div>
+
+        <!-- Trades Table -->
+        <h2>Trades</h2>
+        <table id="tradesTable">
+            <thead>
+                <tr>
+                    <th>Amount
+                        <span class="sort-icons">
+                            <button class="sort-btn" onclick="sortTrades('asc')">▲</button>
+                            <button class="sort-btn" onclick="sortTrades('desc')">▼</button>
+                        </span>
+                    </th>
+                    <th>Price (USD)</th>
+                    <th>Fee (%)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <!-- Calculation Options -->
+        <h2>Calculations</h2>
+        <label for="calculationType">Choose Calculation Type:</label>
+        <select id="calculationType" class="styled-select" onchange="toggleCalculationInputs()">
+            <option value="percentage">Take Profit Percentage</option>
+            <option value="targetPrice">Target Price</option>
+        </select>
+
+        <div id="percentageInput">
+            <label>Take Profit %:</label>
+            <input type="number" id="takeProfit" placeholder="Take Profit %" step="0.01">
+        </div>
+
+        <div id="targetPriceInput" style="display: none;">
+            <label>Target Price (USD):</label>
+            <input type="number" id="targetPrice" placeholder="Target Price in USD">
+        </div>
+
+        <button class="primary-btn" onclick="calculateProfit()">Calculate</button>
+        <h3 id="result"></h3>
+
+        <!-- Result Display -->
+        <div id="profitOutput">
+            <p>Total Amount Bought: <span id="totalAmount"></span></p>
+            <p>Total Amount in USD: <span id="totalUSD"></span></p> <!-- Added for total in USD -->
+            <p>Average Buy Price: <span id="averagePrice"></span></p>
+            <p>Profit in USD: <span id="profit"></span></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
