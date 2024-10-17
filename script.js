@@ -423,7 +423,7 @@ function displayTrades(calculatorId) {
             const row = document.createElement("tr");
             row.innerHTML = `
                 <td>${trade.amount}</td>
-                <td>${formatPrice(trade.price)} USD</td>
+                <td>${formatPrice(trade.price)}</td>
                 <td>${(trade.fee * 100).toFixed(2)}%</td>
                 <td>
                     <button class="icon-btn delete-btn" aria-label="Delete Trade">
