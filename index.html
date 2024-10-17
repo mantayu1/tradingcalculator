@@ -7,72 +7,111 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1 id="mainTitle">Trading Calculator</h1>
-
-        <!-- Input Fields -->
-        <div class="inputs">
-            <label>Ticker:</label>
-            <input type="text" id="ticker" placeholder="Enter asset ticker (e.g., BTC)" oninput="updateTitle()">
-            <label>Trading Fee (%):</label>
-            <input type="number" id="fee" value="0.1" placeholder="Fee in %" step="0.01">
-
-            <h2>Add Trade</h2>
-            <label>Amount Bought:</label>
-            <input type="number" id="amount" placeholder="Amount of asset">
-            <label>Price (USD):</label>
-            <input type="number" id="price" placeholder="Price per asset in USD">
-            <button class="primary-btn" onclick="addTrade()">Add Trade</button>
-        </div>
-
-        <!-- Trades Table -->
-        <h2>Trades</h2>
-        <table id="tradesTable">
-            <thead>
-                <tr>
-                    <th>Amount
-                        <span class="sort-icons">
-                            <button class="sort-btn" onclick="sortTrades('asc')">▲</button>
-                            <button class="sort-btn" onclick="sortTrades('desc')">▼</button>
-                        </span>
-                    </th>
-                    <th>Price (USD)</th>
-                    <th>Fee (%)</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-
-        <!-- Calculation Options -->
-        <h2>Calculations</h2>
-        <label for="calculationType">Choose Calculation Type:</label>
-        <select id="calculationType" class="styled-select" onchange="toggleCalculationInputs()">
-            <option value="percentage">Take Profit Percentage</option>
-            <option value="targetPrice">Target Price</option>
-        </select>
-
-        <div id="percentageInput">
-            <label>Take Profit %:</label>
-            <input type="number" id="takeProfit" placeholder="Take Profit %" step="0.01">
-        </div>
-
-        <div id="targetPriceInput" style="display: none;">
-            <label>Target Price (USD):</label>
-            <input type="number" id="targetPrice" placeholder="Target Price in USD">
-        </div>
-
-        <button class="primary-btn" onclick="calculateProfit()">Calculate</button>
-        <h3 id="result"></h3>
-
-        <!-- Result Display -->
-        <div id="profitOutput">
-            <p>Total Amount Bought: <span id="totalAmount"></span></p>
-            <p>Total Amount in USD: <span id="totalUSD"></span></p> <!-- Added for total in USD -->
-            <p>Average Buy Price: <span id="averagePrice"></span></p>
-            <p>Profit in USD: <span id="profit"></span></p>
-        </div>
+    <div class="main-container">
+        <div id="calculatorsContainer"></div>
+        <button id="createCalculatorBtn" class="primary-btn">
+            <span class="btn-text">Create New Calculator</span>
+            <span class="btn-icon" style="display: none;">
+                <!-- Plus Icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="black" stroke-width="2" viewBox="0 0 24 19">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </span>
+        </button>
     </div>
+
+    <!-- Calculator Template -->
+    <template id="calculatorTemplate">
+        <div class="calculator">
+            <div class="calculator-header">
+                <h1 class="mainTitle">Trading Calculator</h1>
+                <div class="header-buttons">
+                    <button class="icon-btn collapse-btn" aria-label="Collapse">
+                        <!-- Collapse Icon SVG (Chevron) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="black" stroke-width="2" viewBox="0 0 24 24">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <button class="icon-btn delete-calculator-btn" aria-label="Delete">
+                        <!-- Delete Icon SVG (Trash) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="black" stroke-width="2" viewBox="0 0 24 24">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6l-1 14H6L5 6"></path>
+                            <path d="M10 11v6"></path>
+                            <path d="M14 11v6"></path>
+                            <path d="M9 6V4h6v2"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="inputs">
+                <label for="ticker">Ticker:</label>
+                <input type="text" class="ticker" id="ticker" placeholder="Enter asset ticker (e.g., BTC)">
+                <label for="fee">Trading Fee (%):</label>
+                <input type="number" class="fee" id="fee" value="0.1" placeholder="Fee in %" step="0.01" min="0">
+
+                <h2>Add Trade</h2>
+                <label for="amount">Amount Bought:</label>
+                <input type="number" class="amount" id="amount" placeholder="Amount of asset" min="0.0001" step="0.0001">
+                <label for="price">Price (USD):</label>
+                <input type="number" class="price" id="price" placeholder="Price per asset in USD" min="0.01" step="0.01">
+                <button class="primary-btn addTradeBtn">Add Trade</button>
+            </div>
+
+            <!-- Trades Table -->
+            <h2>Trades</h2>
+            <table class="tradesTable">
+                <thead>
+                    <tr>
+                        <th>Amount
+                            <span class="sort-icons">
+                                <button class="sort-btn asc" aria-label="Sort Ascending">▲</button>
+                                <button class="sort-btn desc" aria-label="Sort Descending">▼</button>
+                            </span>
+                        </th>
+                        <th>Price (USD)</th>
+                        <th>Fee (%)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <!-- Calculation Options -->
+            <h2>Calculations</h2>
+            <label for="calculationType">Choose Calculation Type:</label>
+            <select class="calculationType styled-select" id="calculationType">
+                <option value="percentage">Take Profit Percentage</option>
+                <option value="targetPrice">Target Price</option>
+            </select>
+
+            <div class="percentageInput">
+                <label for="takeProfit">Take Profit %:</label>
+                <input type="number" class="takeProfit" id="takeProfit" placeholder="Take Profit %" step="0.01" min="0.01">
+            </div>
+
+            <div class="targetPriceInput" style="display: none;">
+                <label for="targetPrice">Target Price (USD):</label>
+                <input type="number" class="targetPrice" id="targetPrice" placeholder="Target Price in USD" min="0.01" step="0.01">
+            </div>
+
+            <button class="primary-btn calculateProfitBtn">Calculate</button>
+            <h3 class="result"></h3>
+
+            <!-- Result Display -->
+            <div class="profitOutput">
+                <p>Total Amount <span class="tickerLabel"></span> Bought: <span class="totalAmount">0</span></p>
+                <p>Total Invested: <span class="totalUSD">0</span></p>
+                <p>Total Fees Paid: <span class="totalFees">0</span></p> <!-- Updated Section -->
+                <p>Average Buy Price: <span class="averagePrice">0</span></p>
+                <p>Profit Percentage: <span class="profitPercentage">0</span></p> <!-- New Section Added -->
+                <p>Target Price: <span class="targetPriceDisplay">0</span></p> <!-- Added Target Price Display -->
+                <p>Profit (Net): <span class="profit">0</span></p> <!-- Updated Section -->
+            </div>
+        </div>
+    </template>
 
     <script src="script.js"></script>
 </body>
