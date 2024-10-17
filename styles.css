@@ -1,4 +1,8 @@
 /* General styles */
+* {
+    box-sizing: border-box; /* Apply box-sizing globally */
+}
+
 body {
     font-family: 'Arial', sans-serif;
     background-color: #2b2b2b; /* Darker gray background */
@@ -7,30 +11,146 @@ body {
     padding: 0;
 }
 
-.container {
-    margin: 50px auto;
-    max-width: 600px;
+.main-container {
+    margin: 20px auto;
+    max-width: 800px; /* Increased max-width for better spacing */
+    padding: 10px;
+    background-color: #2b2b2b;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Create New Calculator Button */
+.primary-btn {
+    display: block; /* Make it a block-level element */
+    width: 100%; /* Adjust as needed */
+    max-width: 600px; /* Match calculator's max-width */
+    padding: 10px 20px; /* Adjust horizontal padding */
+    background-color: #00ff00;
+    border: none;
+    color: black;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 20px auto; /* Top and bottom margin with auto left and right */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+    
+    /* Center text inside the button */
+    text-align: center;
+}
+
+.primary-btn:hover {
+    background-color: #00cc00; /* Slightly darker green on hover */
+}
+
+/* Button icon styling */
+.btn-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Icon-only button state */
+.primary-btn.icon-only {
+    width: 40px; /* Squarish size */
+    height: 40px;
+    padding: 0;
+    border-radius: 50%; /* Circular button for icon-only */
+}
+
+.primary-btn.icon-only .btn-text {
+    display: none;
+}
+
+.primary-btn.icon-only .btn-icon {
+    display: inline;
+}
+
+/* Styles for individual calculators */
+.calculator {
+    width: 100%; /* Make calculators take full width of container */
+    max-width: 800px;
+    margin: 20px 0;
     padding: 20px;
     background-color: #1c1c1c;
     border-radius: 10px;
+    position: relative;
 }
 
+/* Calculator Header */
+.calculator-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Header Buttons */
+.header-buttons {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+}
+
+/* Icon Buttons (Collapse and Delete) */
+.icon-btn {
+    background-color: #39FF14; /* Neon green background */
+    border: 2px solid #39FF14; /* Green square outline */
+    border-radius: 5px; /* Slightly rounded corners */
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.icon-btn svg {
+    stroke: black; /* Ensure icon color is black */
+    fill: none; /* Remove fill to keep icon outline clean */
+    stroke-width: 2px;
+}
+
+.icon-btn:hover {
+    background-color: #00ff00; /* Slightly different neon green on hover */
+    border-color: #00ff00;
+}
+
+/* Titles */
 h1, h2 {
-    text-align: center;
     color: #fff; /* Titles in white */
     margin-bottom: 20px;
+    margin-right: 40px;
+    font-size: 24px; /* Adjusted font size for titles */
 }
 
-#mainTitle span {
-    color: #00ff00; /* Ticker in neon green */
+.calculator .mainTitle a.ticker-link {
+    color: #39FF14; /* Neon Green */
+    text-decoration: none;
+    font-weight: bold;
 }
 
+.calculator .mainTitle a.ticker-link:visited {
+    color: #39FF14; /* Neon Green */
+}
+
+.calculator .mainTitle a.ticker-link:hover {
+    color: #39FF14; /* Neon Green */
+}
+
+.calculator .mainTitle a.ticker-link:active {
+    color: #39FF14; /* Neon Green */
+}
+
+/* Labels */
 label {
     display: block;
     margin-bottom: 5px;
     color: #ddd;
+    font-size: 16px; /* Adjusted font size */
+    text-align: left; /* Left align labels */
 }
 
+/* Inputs */
 input {
     width: 100%;
     padding: 10px;
@@ -41,27 +161,14 @@ input {
     color: white;
     font-size: 16px;
     outline: none;
-    box-sizing: border-box; /* Ensures correct padding behavior */
 }
 
-.primary-btn {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #00ff00;
-    border: none;
-    color: black;
-    font-size: 18px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px;
+/* Highlight invalid inputs */
+input.invalid {
+    border: 2px solid red;
 }
 
-.primary-btn:hover {
-    background-color: #00cc00;
-}
-
-/* Custom Dropdown Arrow Styling */
+/* Styled Select */
 .styled-select {
     width: 100%;
     padding: 10px;
@@ -85,6 +192,7 @@ input {
     background-color: #666; /* Change on hover */
 }
 
+/* Trades Table */
 table {
     width: 100%;
     border-collapse: separate; /* Changed from collapse to separate */
@@ -98,7 +206,7 @@ th, td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #444;
-    font-size: 16px;
+    font-size: 16px; /* Adjusted font size */
 }
 
 th {
@@ -110,68 +218,173 @@ td {
     background-color: #2e2e2e;
 }
 
+/* Delete Trade Button */
 button.delete-btn {
     background-color: #ff1493; /* Neon pink for delete buttons */
     color: #fff;
     border: none;
-    padding: 8px 12px;
+    padding: 8px 9px;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    margin-left: 8px;
 }
 
 button.delete-btn:hover {
     background-color: #ff69b4; /* Lighter pink on hover */
 }
 
+/* Sort Icons */
 .sort-icons {
-    display: inline-block;
-    margin-left: 10px;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 5px; /* Reduced margin to prevent breaking */
 }
 
 .sort-btn {
     background: none;
     border: none;
     color: #00ff00;
-    font-size: 12px;
+    font-size: 14px; /* Slightly larger for better tap targets */
     cursor: pointer;
+    margin-left: 3px; /* Reduced margin between arrows */
+    margin-right: 3px; /* Reduced margin between arrows */
+    padding: 0;
 }
 
 .sort-btn:hover {
     color: #00cc00;
 }
 
-#profitOutput {
-    text-align: center;
+/* Profit Output */
+.profitOutput {
+    text-align: left; /* Left align text */
     margin-top: 20px;
+    font-size: 16px; /* Adjusted font size */
 }
 
-#profitOutput span {
-    color: #00ff00;
+.profitOutput span {
+    color: #39FF14; /* Neon Green */
     font-weight: bold;
 }
 
-/* Mobile Styles */
-@media (max-width: 600px) {
-    .container {
+/* Collapsed state styles */
+.calculator.collapsed .inputs,
+.calculator.collapsed .tradesTable,
+.calculator.collapsed h2,
+.calculator.collapsed .calculationType,
+.calculator.collapsed .percentageInput,
+.calculator.collapsed .targetPriceInput,
+.calculator.collapsed .calculateProfitBtn,
+.calculator.collapsed .result {
+    display: none;
+}
+
+/* Ensure profitOutput is always visible */
+.calculator .profitOutput {
+    display: block;
+    text-align: left; /* Left align text when collapsed */
+}
+
+.calculator.collapsed .profitOutput {
+    margin-top: 10px;
+}
+
+/* Ensure ticker-link remains neon green */
+.ticker-link {
+    color: #39FF14; /* Neon Green */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.ticker-link:visited {
+    color: #39FF14; /* Neon Green */
+}
+
+.ticker-link:hover {
+    color: #39FF14; /* Neon Green */
+}
+
+.ticker-link:active {
+    color: #39FF14; /* Neon Green */
+}
+
+/* Responsive Styles */
+@media (max-width: 800px) {
+    .main-container {
+        width: 95%;
+        padding: 5px;
+    }
+
+    .calculator {
+        max-width: 100%;
         padding: 15px;
-        width: 90%; /* Improved mobile responsiveness with margin space */
-        margin: 20px auto;
+        margin: 15px 0;
     }
 
     h1, h2 {
-        font-size: 24px;
+        font-size: 20px; /* Further reduced font size for mobile */
+    }
+
+    label {
+        font-size: 14px; /* Reduced font size */
+        text-align: left; /* Ensure left alignment */
     }
 
     input, .primary-btn, .styled-select {
-        font-size: 14px;
-        padding: 8px;
+        font-size: 14px; /* Reduced font size */
+        padding: 8px; /* Reduced padding */
     }
 
     table {
-        font-size: 14px;
+        font-size: 14px; /* Reduced font size */
     }
 
     th, td {
-        padding: 8px;
+        padding: 8px; /* Reduced padding */
+        font-size: 14px; /* Reduced font size */
+    }
+
+    .profitOutput {
+        font-size: 14px; /* Reduced font size */
+        text-align: left; /* Left align text in profitOutput on mobile */
+    }
+
+    .primary-btn {
+        font-size: 16px; /* Slightly reduced font size */
+        padding: 8px; /* Reduced padding */
+    }
+
+    /* Adjust button icon size for mobile */
+    .btn-icon svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* Adjust icon-only button size for mobile if needed */
+    .primary-btn.icon-only {
+        width: 35px;
+        height: 35px;
+    }
+
+    /* Ensure the Create New Calculator button aligns and centers properly */
+    .primary-btn {
+        max-width: 100%;
+    }
+
+    /* Prevent table headers from wrapping */
+    th {
+        white-space: nowrap;
+    }
+
+    /* Adjust sort-icons alignment */
+    .sort-icons {
+        margin-left: 5px; /* Ensure minimal margin */
     }
 }
+
