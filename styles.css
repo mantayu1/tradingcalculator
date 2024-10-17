@@ -337,7 +337,7 @@ button.delete-btn:hover {
     }
 
     input, .primary-btn, .styled-select {
-        font-size: 14px; /* Reduced font size */
+        font-size: 16px; /* Reduced font size */
         padding: 8px; /* Reduced padding */
     }
 
@@ -387,4 +387,3 @@ button.delete-btn:hover {
         margin-left: 5px; /* Ensure minimal margin */
     }
 }
-
